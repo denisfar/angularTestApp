@@ -12,25 +12,27 @@ chatApp.factory('vkData', function vkData($http, $q, $location){
       })
     },
 
-    dialogs: function(){
-      VK.Api.call('messages.getDialogs', {count: 200},
-      function(r) {
-  if(r.response) { return r.response}
-  }
-)}
+    friends: function(){
+      var deferred = $q.defer();
+      VK.Api.call('friends.get', {count: 1000, fields: 'photo_100'},
+      function success(r) {
+        deferred.resolve(r)},
+      function error(r){
+        deferred.reject(r);
+      })
+      return deferred.promise;
+    },
 
-      // var deferred = $q.defer();
-      // $http({method: 'GET',
-      // url: 'http://api.vk.com/method/messages.getDialogs',
-      // params:{count: 200},
-      // dataType: 'jsonp',
-      // crossDomain: "true"}).
-      // then(function success(response){
-      //   deferred.resolve(response.data.question);
-      // },function error(response) {
-      //   deferred.reject(response.status);
-      // });
-      // return deferred.promise;
-      //}
+    friend: function(id){
+      var deferred = $q.defer();
+      VK.Api.call('users.get', { user_ids:id ,count: 1, fields: 'photo_200, sex, bdate, city'},
+      function success(r) {
+        deferred.resolve(r)},
+      function error(r){
+        deferred.reject(r);
+      })
+      return deferred.promise;
+    }
+
   }
 });

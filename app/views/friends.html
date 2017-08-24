@@ -1,0 +1,14 @@
+<div ng-repeat="friend in friends" class="row-fluid">
+  <div  class="span8">
+    <a href="#!friend/{{friend.uid}}">
+      <div class="row-fluid">
+        <div  class="span3">
+          <img src="{{friend.photo_100}}"/>
+        </div>
+        <div  class="span3">
+          <div>{{friend.first_name + ' ' + friend.last_name}}</div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

@@ -2,10 +2,15 @@ VK.init({'apiId': 5629561});
 
 var chatApp = angular.module('chatApp', ["ngRoute"])
     .config(function($routeProvider){
-        $routeProvider.when('/dialogs',
+        $routeProvider.when('/friends',
         {
-            templateUrl:'/app/views/dialogs.html',
-            controller:'dialogsController'
+            templateUrl:'/app/views/friends.html',
+            controller:'friendsController'
+        });
+        $routeProvider.when('/friend/:id',
+        {
+            templateUrl:'/app/views/friend.html',
+            controller:'friendController'
         });
         $routeProvider.when('/signIn',
         {
@@ -17,5 +22,12 @@ var chatApp = angular.module('chatApp', ["ngRoute"])
             redirectTo:'/signIn'
         });
 
-        
+
+})
+.run(function($rootScope, $templateCache) {
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        if (typeof(current) !== 'undefined'){
+            $templateCache.remove(current.templateUrl);
+        }
+    });
 });
